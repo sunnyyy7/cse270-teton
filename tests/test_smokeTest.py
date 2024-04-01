@@ -10,7 +10,6 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options
-
 class TestSmokeTest():
   def setup_method(self, method):
     options = Options()
@@ -49,18 +48,19 @@ class TestSmokeTest():
   
   def test_test4joinpage(self):
     self.driver.get("http://127.0.0.1:5500/teton/1.6/index.html")
+    self.driver.set_window_size(1259, 719)
     self.driver.find_element(By.LINK_TEXT, "Join").click()
-    elements = self.driver.find_elements(By.NAME, "fname")
-    assert len(elements) > 0
+    self.driver.find_element(By.NAME, "fname").click()
     self.driver.find_element(By.NAME, "fname").click()
     self.driver.find_element(By.NAME, "fname").send_keys("Sunny")
     self.driver.find_element(By.NAME, "lname").click()
     self.driver.find_element(By.NAME, "lname").send_keys("Yeung")
     self.driver.find_element(By.NAME, "bizname").click()
-    self.driver.find_element(By.NAME, "bizname").send_keys("hello world")
+    self.driver.find_element(By.NAME, "bizname").send_keys("Hello World")
     self.driver.find_element(By.NAME, "biztitle").click()
-    self.driver.find_element(By.NAME, "biztitle").send_keys("manager")
+    self.driver.find_element(By.NAME, "biztitle").send_keys("CEO")
     self.driver.find_element(By.NAME, "submit").click()
+    self.driver.find_element(By.NAME, "email").click()
     elements = self.driver.find_elements(By.NAME, "email")
     assert len(elements) > 0
   
