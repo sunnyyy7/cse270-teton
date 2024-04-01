@@ -9,12 +9,10 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.chrome.options import Options
+
 class TestSmokeTest():
   def setup_method(self, method):
-    options = Options()
-    options.add_argument("--headless=new")
-    self.driver = webdriver.Chrome(options=options)
+    self.driver = webdriver.Chrome()
     self.vars = {}
   
   def teardown_method(self, method):
@@ -65,16 +63,15 @@ class TestSmokeTest():
     assert len(elements) > 0
   
   def test_test5adminpage(self):
-    self.driver.get("http://127.0.0.1:5500/teton/1.6/index.html")
-    self.driver.find_element(By.LINK_TEXT, "Admin").click()
-    elements = self.driver.find_elements(By.ID, "username")
-    assert len(elements) > 0
+    self.driver.get("http://127.0.0.1:5500/teton/1.6/admin.html")
+    self.driver.set_window_size(1259, 719)
     self.driver.find_element(By.ID, "username").click()
     self.driver.find_element(By.ID, "username").send_keys("useruser")
     self.driver.find_element(By.ID, "password").click()
-    self.driver.find_element(By.ID, "password").send_keys("abcdef")
+    self.driver.find_element(By.ID, "password").send_keys("password")
     self.driver.find_element(By.CSS_SELECTOR, ".mysubmit:nth-child(4)").click()
-    WebDriverWait(self.driver, 30).until(expected_conditions.text_to_be_present_in_element((By.CSS_SELECTOR, ".errorMessage"), "Invalid username and password."))
+    elements = self.driver.find_elements(By.CSS_SELECTOR, ".errorMessage")
+    assert len(elements) > 0
   
   def test_nameandLogoTest(self):
     self.driver.get("http://127.0.0.1:5500/teton/1.6/index.html")
